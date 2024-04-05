@@ -6,6 +6,8 @@ import { validatePagination, validateSorting } from '../middlewares/validator';
 
 const router: Router = express.Router();
 
+router.get('/email', APIController.sendEmail);
+
 router.get('/', validatePagination, validateSorting, APIController.get);
 
 router.get('/:id', APIController.getById);
