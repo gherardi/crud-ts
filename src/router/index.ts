@@ -1,21 +1,23 @@
 import express, { Router } from 'express';
 
 import * as APIController from '../controllers';
+import * as authController from '../controllers/authController';
 
 import { validatePagination, validateSorting } from '../middlewares/validator';
+import { isAuthenticated } from '../middlewares/auth';
 
 const router: Router = express.Router();
 
-router.get('/email', APIController.sendEmail);
+router.post('/login', authController.login);
+router.post('/signup', authController.signup);
 
-router.get('/', validatePagination, validateSorting, APIController.get);
-
+router.get('/', APIController.getAll);
 router.get('/:id', APIController.getById);
 
-router.post('/', APIController.post);
+router.use(isAuthenticated);
 
-router.patch('/:id', APIController.patchById);
-
+router.post('/', APIController.create);
+router.patch('/:id', APIController.updateById);
 router.delete('/:id', APIController.deleteById);
 
 export default router;
