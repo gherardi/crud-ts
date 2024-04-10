@@ -31,31 +31,31 @@ export const isAuthenticated = async (
 		}
 
 		// 2) Verification token
-		const decoded: { id: string } = await promisify(jwt.verify)(
-			token,
-			JWT_SECRET
-		);
+		// const decoded: { id: string } = await promisify(jwt.verify)(
+		// 	token,
+		// 	JWT_SECRET
+		// );
 
-		// 3) Check if user still exists
-		const currentUser = await User.findById(decoded.id);
+		// // 3) Check if user still exists
+		// const currentUser = await User.findById(decoded.id);
 
-		if (!currentUser) {
-			res
-				.status(401)
-				.json('The user belonging to this token does no longer exist.');
-			return;
-		}
+		// if (!currentUser) {
+		// 	res
+		// 		.status(401)
+		// 		.json('The user belonging to this token does no longer exist.');
+		// 	return;
+		// }
 
-		// 4) Check if user changed password after the token was issued
-		if (currentUser.changedPasswordAfter(decoded.iat)) {
-			res
-				.status(401)
-				.json('User recently changed password! Please log in again.');
-			return;
-		}
+		// // 4) Check if user changed password after the token was issued
+		// if (currentUser.changedPasswordAfter(decoded.iat)) {
+		// 	res
+		// 		.status(401)
+		// 		.json('User recently changed password! Please log in again.');
+		// 	return;
+		// }
 
-		// GRANT ACCESS TO PROTECTED ROUTE
-		merge(req, { user: currentUser });
+		// // GRANT ACCESS TO PROTECTED ROUTE
+		// merge(req, { user: currentUser });
 
 		next();
 	} catch (err) {

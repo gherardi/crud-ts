@@ -8,16 +8,20 @@ import { isAuthenticated } from '../middlewares/auth';
 
 const router: Router = express.Router();
 
-router.post('/login', authController.login);
-router.post('/signup', authController.signup);
+router.get('/test', authController.test);
 
-router.get('/', APIController.getAll);
-router.get('/:id', APIController.getById);
 
-router.use(isAuthenticated);
 
-router.post('/', APIController.create);
-router.patch('/:id', APIController.updateById);
-router.delete('/:id', APIController.deleteById);
+// router.post('/login', authController.login);
+// router.post('/signup', authController.signup);
+
+// router.get('/', APIController.getAll);
+// router.get('/:id', APIController.getById);
+
+// router.use(isAuthenticated);
+
+// router.post('/', APIController.create);
+// router.patch('/:id', APIController.updateById);
+// router.delete('/:id', APIController.deleteById);
 
 export default router;
