@@ -32,22 +32,48 @@ export const getAll = handleAsyncError(async function (
 	res.status(200).json({ status: 'success', length: data.length, data });
 });
 
-export const getById = async function (req: Request, res: Response) {
-	// const id = req.params.id;
+export const getById = handleAsyncError(async function (
+	req: Request,
+	res: Response
+) {
 	const { id } = req.params;
-	res.status(501).json({ message: 'This route is not yet implemented!', id });
-};
+	const { data, error } = await supabase
+		.from('province')
+		.select('*')
+		.eq('id', id);
 
-export const create = async function (_: Request, res: Response) {
+	if (error) throw error;
+	
+	res.status(200).json({ status: 'success', id, data: data[0] });
+});
+
+export const create = handleAsyncError(async function (
+	_: Request,
+	res: Response
+) {
+	// const { } = req.body;
 	res.status(501).json({ message: 'This route is not yet implemented!' });
-};
+});
 
-export const updateById = async function (req: Request, res: Response) {
+export const updateById = handleAsyncError(async function (
+	req: Request,
+	res: Response
+) {
 	const { id } = req.params;
 	res.status(501).json({ message: 'This route is not yet implemented!', id });
-};
+});
 
-export const deleteById = async function (req: Request, res: Response) {
+export const deleteById = handleAsyncError(async function (
+	req: Request,
+	res: Response
+) {
 	const { id } = req.params;
-	res.status(501).json({ message: 'This route is not yet implemented!', id });
-};
+
+	const { error } = await supabase.from('cities').delete().match({ id: id });
+
+	if (error) throw error;
+
+	res
+		.status(204)
+		.json({ status: 'success', message: 'Record deleted successfully!' });
+});
