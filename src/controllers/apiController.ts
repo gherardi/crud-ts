@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import supabase from '../db/supabase';
 import handleAsyncError from '../utils/handleAsyncError';
+import { get } from 'lodash';
 
 const RES_PER_PAGE = 50;
 
@@ -37,21 +38,25 @@ export const getById = handleAsyncError(async function (
 	res: Response
 ) {
 	const { id } = req.params;
-	const { data, error } = await supabase
+	const { data: province, error } = await supabase
 		.from('province')
 		.select('*')
-		.eq('id', id);
+		.eq('id', id)
+		.maybeSingle();
 
 	if (error) throw error;
-	
-	res.status(200).json({ status: 'success', id, data: data[0] });
+
+	res.status(200).json({ status: 'success', id, province });
 });
 
 export const create = handleAsyncError(async function (
-	_: Request,
+	req: Request,
 	res: Response
 ) {
-	// const { } = req.body;
+	const { id: userId } = get(req, 'user');
+
+	console.log(userId);
+
 	res.status(501).json({ message: 'This route is not yet implemented!' });
 });
 
