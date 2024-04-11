@@ -1,16 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { merge, get } from 'lodash';
 import jwt from 'jsonwebtoken';
-
 import { promisify } from 'util';
-import { JWT_SECRET } from '../utils/constants';
+import { merge, get } from 'lodash';
 
-export const isAuthenticated = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	try {
+import handleAsyncError from '../utils/handleAsyncError';
+
+export const isAuthenticated = handleAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
 		let token: string = '';
 
 		// 1) Getting token and check of it's there
@@ -36,7 +32,7 @@ export const isAuthenticated = async (
 		// 	JWT_SECRET
 		// );
 
-		// // 3) Check if user still exists
+		// 3) Check if user still exists
 		// const currentUser = await User.findById(decoded.id);
 
 		// if (!currentUser) {
@@ -46,7 +42,7 @@ export const isAuthenticated = async (
 		// 	return;
 		// }
 
-		// // 4) Check if user changed password after the token was issued
+		// 4) Check if user changed password after the token was issued
 		// if (currentUser.changedPasswordAfter(decoded.iat)) {
 		// 	res
 		// 		.status(401)
@@ -54,15 +50,9 @@ export const isAuthenticated = async (
 		// 	return;
 		// }
 
-		// // GRANT ACCESS TO PROTECTED ROUTE
+		// GRANT ACCESS TO PROTECTED ROUTE
 		// merge(req, { user: currentUser });
 
 		next();
-	} catch (err) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Invalid token',
-			error: (err as Error).message,
-		});
 	}
-};
+);
