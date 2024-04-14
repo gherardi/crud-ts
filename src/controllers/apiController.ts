@@ -53,11 +53,17 @@ export const create = handleAsyncError(async function (
 	req: Request,
 	res: Response
 ) {
-	const { id: userId } = get(req, 'user');
+	const { nome, popolazione, codice, regione } = req.body;
 
-	console.log(userId);
+	const { data, error } = await supabase
+		.from('province')
+		.insert({ nome, popolazione, codice, regione })
+		.select('*')
+		.single();
 
-	res.status(501).json({ message: 'This route is not yet implemented!' });
+	if (error) throw error;
+
+	res.status(200).json({ status: 'success', data });
 });
 
 export const updateById = handleAsyncError(async function (

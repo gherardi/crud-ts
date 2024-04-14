@@ -23,6 +23,10 @@ export const isAuthenticated = handleAsyncError(
 		if (!token)
 			throw new Error('You are not logged in! Please log in to get access');
 
+		// only for postman testing
+		if (token === '{{jwt}}')
+			throw new Error('You are not logged in! Please log in to get access');
+
 		// 2) Verification token
 		const decoded = (await promisify(jwt.verify)(
 			token,

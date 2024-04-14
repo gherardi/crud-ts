@@ -37,6 +37,7 @@ export const signup = handleAsyncError(async function (
 	const { email, password } = req.body;
 
 	if (!email || !password) throw new Error('email and password are required');
+	
 
 	const hash = await bcrypt.hash(password, 12);
 

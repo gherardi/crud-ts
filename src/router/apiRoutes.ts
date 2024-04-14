@@ -6,10 +6,12 @@ import * as authController from '../controllers/authController';
 import { isAuthenticated } from '../middlewares/auth';
 // import { validatePagination, validateSorting } from '../middlewares/validator';
 
+import { validateEmail, validatePassword, validateCreation } from '../middlewares/validate';
+
 const router: Router = express.Router();
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+router.post('/signup', validateEmail, validatePassword, authController.signup);
+router.post('/login', validateEmail, validatePassword, authController.login);
 router.get('/logout', authController.logout);
 
 router.get('/', apiController.getAll);
@@ -17,8 +19,8 @@ router.get('/:id', apiController.getById);
 
 router.use(isAuthenticated);
 
-router.post('/', apiController.create);
-router.patch('/:id', apiController.updateById);
-router.delete('/:id', apiController.deleteById);
+router.post('/', validateCreation, apiController.create);
+// router.patch('/:id', apiController.updateById);
+// router.delete('/:id', apiController.deleteById);
 
 export default router;
