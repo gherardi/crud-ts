@@ -46,7 +46,7 @@ export const getById = handleAsyncError(async function (
 
 	if (error) throw error;
 
-	res.status(200).json({ status: 'success', id, province });
+	res.status(200).json({ status: 'success', province });
 });
 
 export const create = handleAsyncError(async function (
@@ -71,20 +71,35 @@ export const updateById = handleAsyncError(async function (
 	res: Response
 ) {
 	const { id } = req.params;
-	res.status(501).json({ message: 'This route is not yet implemented!', id });
+	const { nome, popolazione, codice, regione } = req.body;
+
+	const { data, error } = await supabase
+		.from('province')
+		.update({ nome, popolazione, codice, regione })
+		.eq('id', id)
+		.select('*')
+		.single();
+
+	if (error) throw error;
+
+	res.status(200).json({ status: 'success', data });
 });
 
 export const deleteById = handleAsyncError(async function (
 	req: Request,
 	res: Response
 ) {
-	const { id } = req.params;
+	const id = req.params.id;
 
-	const { error } = await supabase.from('cities').delete().match({ id: id });
+	const { data, error } = await supabase
+		.from('province')
+		.delete()
+		.eq('id', id)
+		.select()
+		.maybeSingle();
 
 	if (error) throw error;
+	if (!data) throw new Error('Province not found with the specified ID');
 
-	res
-		.status(204)
-		.json({ status: 'success', message: 'Record deleted successfully!' });
+	res.status(200).json({ status: 'success', data });
 });

@@ -4,9 +4,13 @@ import * as apiController from '../controllers/apiController';
 import * as authController from '../controllers/authController';
 
 import { isAuthenticated } from '../middlewares/auth';
-// import { validatePagination, validateSorting } from '../middlewares/validator';
 
-import { validateEmail, validatePassword, validateCreation } from '../middlewares/validate';
+import {
+	validateEmail,
+	validatePassword,
+	validateCreation,
+	validateUpdating,
+} from '../middlewares/validate';
 
 const router: Router = express.Router();
 
@@ -20,7 +24,7 @@ router.get('/:id', apiController.getById);
 router.use(isAuthenticated);
 
 router.post('/', validateCreation, apiController.create);
-// router.patch('/:id', apiController.updateById);
-// router.delete('/:id', apiController.deleteById);
+router.patch('/:id', validateUpdating, apiController.updateById);
+router.delete('/:id', apiController.deleteById);
 
 export default router;

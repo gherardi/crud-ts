@@ -6,8 +6,8 @@ export const validateEmail = function (
 	res: Response,
 	next: NextFunction
 ) {
-	req.body.email = req.body.email.trim();
-	req.body.email = req.body.email.toLowerCase();
+	req.body.email = req.body.email?.trim();
+	req.body.email = req.body.email?.toLowerCase();
 
 	const { email } = req.body;
 
@@ -31,7 +31,7 @@ export const validatePassword = function (
 	res: Response,
 	next: NextFunction
 ) {
-	req.body.password = req.body.password.trim();
+	req.body.password = req.body.password?.trim();
 
 	const { password } = req.body;
 
@@ -63,13 +63,34 @@ export const validateCreation = function (
 	const { nome, popolazione, codice, regione } = req.body;
 
 	if (!nome || !popolazione || !codice || !regione) {
-		return res
-			.status(400)
-			.json({
-				status: 'error',
-				message:
-					'Please provide all the fields! [nome, popolazione, codice, regione]',
-			});
+		return res.status(400).json({
+			status: 'error',
+			message:
+				'Please provide all the fields! [nome, popolazione, codice, regione]',
+		});
+	}
+
+	next();
+};
+
+export const validateUpdating = function (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	req.body.nome = req.body.nome?.trim();
+	// req.body.popolazione = // popolazione è un numero quindi non ci sono spazi
+	req.body.codice = req.body.codice?.trim();
+	req.body.regione = req.body.regione?.trim();
+
+	const { nome, popolazione, codice, regione } = req.body;
+
+	if (!nome || !popolazione || !codice || !regione) {
+		return res.status(400).json({
+			status: 'error',
+			message:
+				'Please provide at every field to update! [nome, popolazione, codice, regione]',
+		});
 	}
 
 	next();
