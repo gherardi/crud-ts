@@ -21,7 +21,7 @@ app.use(express.json({ limit: '10kb' })); // reading data from body into req.bod
 app.use(cookieParser()); // Parse cookies
 app.use(compression()); // Compresses requests
 app.use(helmet()); // Set security HTTP headers
-app.use(whitelist('page', 'regione', 'sort')); // prevent parameter pollution
+app.use(whitelist('query')); // prevent parameter pollution
 
 // Limit each IP to 100 requests
 const limiter = rateLimit({
