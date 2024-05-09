@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "nodemon",
 		"dev": "nodemon",
-		"build": "tsc"
+		"build": "ts-node ./src/index.ts"
 	},
 	"keywords": [],
 	"author": "Victor Gherardi",
