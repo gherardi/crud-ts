@@ -5,13 +5,9 @@
 	"scripts": {
 		"start": "nodemon",
 		"dev": "nodemon",
-		"mytsc": "tsc",
+		"compile": "tsc",
 		"prod": "node dist/index.js",
-		"build": "npm-run-all mytsc prod",
-		
-		"mastro": "echo hello",
-		"victor": "echo victor",
-		"tutti": "npm-run-all mastro victor"
+		"build": "npm-run-all compile prod"
 	},
 	"keywords": [],
 	"author": "Victor Gherardi",

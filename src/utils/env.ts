@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const envSchema = z.object({
-	PORT: z.string(),
 	SUPABASE_URL: z.string(),
 	SUPABASE_KEY: z.string(),
 	JWT_SECRET: z.string(),
