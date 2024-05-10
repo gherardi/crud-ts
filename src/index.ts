@@ -9,9 +9,11 @@ import apiRouter from './router/apiRoutes';
 import whitelist from './middlewares/whitelist';
 import globalErrorHandler from './controllers/errorController';
 
+import { env } from './utils/env';
+
 const app: Express = express();
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(env.PORT);
 
 // global middlewares
 app.use(morgan('dev')); // Development logging
