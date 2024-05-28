@@ -1,4 +1,4 @@
-
+[Diagramma](https://excalidraw.com/#json=mgVrMVDTconKdsLV46sX-,HX6Z7AZ0P1y7EIzvvj0Fbg)
 # Typescript RESTful API
 
 Questo progetto è un'API robusta e scalabile scritta interamente sfruttando tutti i vantaggi di Typescript per garantire un codice pulito e affidabile.
