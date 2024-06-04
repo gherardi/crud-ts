@@ -3,11 +3,13 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon",
-		"dev": "nodemon",
-		"compile": "tsc",
-		"prod": "node dist/index.js",
-		"build": "npm-run-all compile prod"
+		"starte": "nodemon",
+		"deve": "nodemon",
+		"compilee": "tsc",
+		"prode": "node dist/index.js",
+		"builde": "npm-run-all compile prod",
+		"build": "tsc",
+		"start": "node dist/index.js"
 	},
 	"keywords": [],
 	"author": "Victor Gherardi",
